@@ -1,10 +1,17 @@
 ---
 paths:
+    - 'index.html'
+    - 'resources/js/app.tsx'
+    - 'resources/js/layouts/**'
+    - 'resources/js/pages/auth/**'
+    - 'resources/js/pages/dashboard.tsx'
+    - 'resources/js/pages/settings/**'
     - 'resources/js/pages/welcome.tsx'
     - 'resources/js/pages/updates/**'
     - 'mock/**'
     - 'vite.preview.config.ts'
     - 'vite.config.ts'
+    - 'vite.laravel.config.ts'
     - 'routes/web.php'
     - 'app/Http/Controllers/HomeController.php'
     - 'app/Http/Controllers/UpdateController.php'
@@ -27,6 +34,26 @@ paths:
 - Never import mock fixtures into production page components or Laravel code. Never give the mock permission to persist a real inquiry; show a preview-only response instead.
 - Keep real application routes, field names, prop types and preview routes aligned (e.g. `/`, `/updates/{slug}`, `/inquiries`). Add new fixtures/Mock handling when new Props or Inertia UI components are introduced.
 - Prefer real Inertia `Link` / `Form` in production TSX. A mock replacement may render a standard anchor or intercept a form submission; it must not become a production dependency.
+
+## Preview responsibilities and supported pages
+
+- Root `index.html` is the PHP-free preview entry point and loads `mock/main.tsx`. Laravel uses its Blade/Inertia entry point; it does not consume this HTML file.
+- `mock/main.tsx` explicitly selects a page by URL and supplies its fixture props. Laravel routes and controller props are not automatically synchronized with it. Currently only `/` and fixture-backed `/updates/{slug}` pages are supported; other URLs render the preview 404. Login, registration, and dashboard previews are not implemented yet.
+- `mock/routes.ts` supplies replacements for imported Wayfinder route helpers. Returning a URL from a helper does not make that page available in the preview. Keep URL helpers and page resolution conceptually separate, even if reorganizing their files.
+- `mock/updates.ts` supplies article fixtures, not API/DB results. `previewUpdates` derives summary props from those fixtures; article detail uses the full fixture including paragraphs.
+- `mock/lang.ts` returns translation keys unchanged. English-key rendering is sufficient for this design preview; do not recreate the Laravel translation pipeline here.
+- `mock/inertia.tsx` implements only the Inertia API surface needed by supported preview pages. Currently `Link` uses normal anchors, `Form` blocks persistence and displays a preview message, `Head` updates the document title, and `usePage()` returns fixed guest props. These are substitutes, not full Inertia implementations.
+- Add a page to the preview only when it is needed for design work. Import the real page, add URL resolution and representative typed props, and extend adapters only for the APIs that page and its layout actually use. A Laravel page does not require a preview counterpart merely because it exists.
+- Unsupported URLs must remain explicit 404s. Do not silently render the home page or imply that an unimplemented login, save, or logout action succeeded.
+
+## Authentication props and layout composition
+
+- A future authenticated preview (such as `/dashboard`) should supply a fictional user and the shared props consumed by the page, layout, and navigation. Inspect the actual shared-prop types and consumers, including URL/sidebar state where needed; do not recreate a real Laravel session or require real credentials.
+- Guest and authenticated preview states must be explicit and consistent across the page and `usePage()`. The current fixed guest stub is insufficient for authenticated layouts. Add a preview provider/context or equivalent when multiple states are needed, rather than changing all pages to a global fake logged-in user.
+- Follow layout selection in `resources/js/app.tsx`: public `welcome` and `updates/*` pages have no app layout; `auth/*` uses `AuthLayout`; `settings/*` uses `AppLayout` outside `SettingsLayout`; other app pages use `AppLayout`.
+- `AppLayout` currently selects the sidebar layout. The header layout is an alternative app shell, not another layer to stack on the sidebar shell. Nest page-specific layouts where production does, and apply each layout once.
+- Reuse the actual layouts and supply the providers/adapters they need. Do not reproduce a sidebar/header inside mock page markup or alter production layout selection just to make a preview render. Importing `resources/js/app.tsx` directly is not a preview solution: it bootstraps the real Inertia application.
+- When adding preview support, verify direct navigation, refresh, links/back navigation, expected props, layout nesting, and mock form behavior. Real authentication, authorization, validation, and persistence still require Laravel checks.
 
 ## Build and branch boundaries
 
