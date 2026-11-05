@@ -1,23 +1,33 @@
-# Laravel Starter Kit: unchanged welcome.tsx in v0
+# v0 design preview — NOISE / FORM
 
-This is the same workflow used in the previous Inertia + v0 PoC.
+The original Laravel + Inertia application stays on `main` / `feat/noise-form`.
+This branch runs its **actual React page files** through a PHP-free Vite preview.
 
-The original `resources/js/pages/welcome.tsx` is imported directly from `mock/main.tsx`. It is **not copied or edited**. Vite aliases replace only backend-dependent imports:
+## Route wiring
 
-- `@inertiajs/react` → `mock/inertia.tsx` (Head, Link, usePage)
-- `@erag/lang-sync-inertia/react` → `mock/lang.ts` (English translation identity)
-- `@/routes` → `mock/routes.ts` (mock URLs)
+| URL | Real page rendered | Mock data |
+| --- | --- | --- |
+| `/` | `resources/js/pages/welcome.tsx` | Static content in the page |
+| `/updates/new-chapter-in-berlin` | `resources/js/pages/updates/show.tsx` | `mock/updates.ts` |
+| `/updates/signal-field-enters-the-world` | Same `updates/show.tsx` | `mock/updates.ts` |
+| `/updates/the-feeling-of-digital-matter` | Same `updates/show.tsx` | `mock/updates.ts` |
 
-The preview shows the unauthenticated English version of the original welcome page. Login and register destinations are placeholders, not live authentication screens.
+Entry point: `index.html` → `mock/main.tsx`. Vite handles deep links with its SPA fallback.
+This mock intentionally uses normal `<a href>` links, so direct navigation, browser back,
+and refresh work without a real Laravel server or Inertia router.
 
-## v0 preview
+## Import into v0
 
-Import `catatsumuri/noise-form`, select branch `v0/design`, Root Directory `./`, and run `vp dev` from repository root.
+Use `catatsumuri/noise-form`, branch `v0/design`, root `./`, command `vp dev`.
+Visit the home page; click any update title to preview the shared article template.
+v0 should edit `resources/js/pages/updates/show.tsx` for the article design.
 
-Root `vite.config.ts` is intentionally the PHP-free v0 configuration; original Laravel config is backed up as `vite.laravel.config.ts`.
+## Migrating to real Inertia routes
 
-## Local Laravel
+1. Add a Laravel route `GET /updates/{slug}` that looks up an article and returns
+   `Inertia::render('updates/show', ['article' => $article])` (or the equivalent).
+2. Replace home-page native article anchors with Inertia `Link` components.
+3. Leave `updates/show.tsx` and its `article` prop intact.
+4. Do **not** copy `mock/`, `index.html`, or the preview Vite configuration into Laravel.
 
-Use `main` or `feat/noise-form` for Laravel at `localhost:8000`. Do **not** merge mock files, `index.html`, or the design-branch Vite config into Laravel.
-
-Only after confirming that the unmodified welcome page renders in v0 should the design iteration begin.
+This is a static design preview. Article fixtures are fictional, not database content.

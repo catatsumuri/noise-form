@@ -43,18 +43,21 @@ const services = [
 const updates = [
     {
         date: '05.2026',
+        slug: 'new-chapter-in-berlin',
         type: 'Studio note',
         title: 'Noise / Form opens a new chapter in Berlin.',
         description: 'A tighter team, wider field of view, and more room for experiments at the edge of design and technology.',
     },
     {
         date: '03.2026',
+        slug: 'signal-field-enters-the-world',
         type: 'New work',
         title: 'Signal Field enters the world.',
         description: 'Our latest interactive installation turns motion, light, and sound into a shared physical language.',
     },
     {
         date: '11.2025',
+        slug: 'the-feeling-of-digital-matter',
         type: 'Field note',
         title: 'Researching the feeling of digital matter.',
         description: 'Notes from our ongoing study of texture, atmosphere, and the spaces between screen and body.',
@@ -188,10 +191,20 @@ export default function Welcome() {
                                 </div>
                                 <div>
                                     <p className="mb-2 text-[10px] font-semibold tracking-[0.16em] text-[#aaa49b] uppercase">{update.type}</p>
-                                    <h3 className="max-w-2xl text-2xl font-semibold leading-tight tracking-[-0.045em] sm:text-3xl">{update.title}</h3>
+                                    <h3 className="max-w-2xl text-2xl font-semibold leading-tight tracking-[-0.045em] sm:text-3xl">
+                                        <a href={`/updates/${update.slug}`} className="transition-colors hover:text-[#ff5634] focus-visible:underline focus-visible:underline-offset-4">
+                                            {update.title}
+                                        </a>
+                                    </h3>
                                     <p className="mt-3 max-w-xl text-sm leading-6 text-[#c7c1b9]">{update.description}</p>
                                 </div>
-                                <span className="text-2xl text-[#d0cac2] sm:pt-5" aria-hidden="true">↗</span>
+                                <a
+                                    href={`/updates/${update.slug}`}
+                                    aria-label={`Read: ${update.title}`}
+                                    className="text-2xl text-[#d0cac2] transition-colors hover:text-[#ff5634] sm:pt-5"
+                                >
+                                    ↗
+                                </a>
                             </article>
                         ))}
                     </div>
