@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(UpdateSeeder::class);
+        $this->call(InquirySeeder::class);
     }
 }
