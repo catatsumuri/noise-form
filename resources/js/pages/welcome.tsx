@@ -265,25 +265,26 @@ export default function Welcome({ updates }: { updates: UpdateSummary[] }) {
                         </h2>
                         <p className="mt-9 max-w-sm text-sm leading-6 text-[#aaa49b]">Tell us what you&apos;re imagining. We&apos;ll bring the right mix of design, technology, and curiosity.</p>
                     </div>
-                    <div className="self-end border-t border-white/30 pt-6">
+                    <form onSubmit={(event) => event.preventDefault()} className="self-end border-t border-white/30 pt-6">
+                        <p className="mb-6 text-xs text-[#aaa49b]">All fields are required.</p>
                         <div className="grid gap-6 sm:grid-cols-2">
                             <label className="text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
                                 Name
-                                <input type="text" placeholder="Your name" className="mt-3 w-full border-b border-white/25 bg-transparent pb-3 text-sm tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
+                                <input type="text" name="name" autoComplete="name" required placeholder="Your name" className="mt-3 w-full border-b border-white/25 bg-transparent pb-3 text-sm tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
                             </label>
                             <label className="text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
                                 Email
-                                <input type="email" placeholder="you@company.com" className="mt-3 w-full border-b border-white/25 bg-transparent pb-3 text-sm tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
+                                <input type="email" name="email" autoComplete="email" required placeholder="you@company.com" className="mt-3 w-full border-b border-white/25 bg-transparent pb-3 text-sm tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
                             </label>
                         </div>
                         <label className="mt-7 block text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
                             Project details
-                            <textarea placeholder="A few words about the idea, timeline, or ambition..." rows={4} className="mt-3 w-full resize-none border-b border-white/25 bg-transparent pb-3 text-sm leading-6 tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
+                            <textarea name="project_details" required placeholder="A few words about the idea, timeline, or ambition..." rows={4} className="mt-3 w-full resize-none border-b border-white/25 bg-transparent pb-3 text-sm leading-6 tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
                         </label>
-                        <button type="button" className="mt-7 inline-flex items-center gap-3 border-b border-[#ff5634] pb-2 text-xs font-semibold tracking-[0.13em] text-[#f4f1eb] uppercase transition-colors hover:text-[#ff5634]">
+                        <button type="submit" className="mt-7 inline-flex items-center gap-3 border-b border-[#ff5634] pb-2 text-xs font-semibold tracking-[0.13em] text-[#f4f1eb] uppercase transition-colors hover:text-[#ff5634]">
                             Send inquiry <span aria-hidden="true">↗</span>
                         </button>
-                    </div>
+                    </form>
                 </div>
             </section>
 
