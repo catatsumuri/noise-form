@@ -26,6 +26,9 @@ class HomeController extends Controller
                 'imageAlt' => $update->image_alt,
             ]);
 
-        return Inertia::render('welcome', ['updates' => $updates]);
+        return Inertia::render('welcome', [
+            'updates' => $updates,
+            'inquirySent' => session('inquiry_sent', false),
+        ]);
     }
 }

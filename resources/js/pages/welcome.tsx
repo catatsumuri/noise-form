@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Form, Link } from '@inertiajs/react';
 import type { UpdateSummary } from '@/types/update';
 
 const projects = [
@@ -39,7 +39,7 @@ const services = [
     'Experimental R&D',
 ];
 
-export default function Welcome({ updates }: { updates: UpdateSummary[] }) {
+export default function Welcome({ updates, inquirySent = false }: { updates: UpdateSummary[]; inquirySent?: boolean }) {
     return (
         <main id="top" className="min-h-screen overflow-x-hidden bg-[#0b0b0b] font-sans text-[#f4f1eb] antialiased">
             <title>NOISE / FORM — Creative Technology Studio</title>
@@ -265,26 +265,84 @@ export default function Welcome({ updates }: { updates: UpdateSummary[] }) {
                         </h2>
                         <p className="mt-9 max-w-sm text-sm leading-6 text-[#aaa49b]">Tell us what you&apos;re imagining. We&apos;ll bring the right mix of design, technology, and curiosity.</p>
                     </div>
-                    <form onSubmit={(event) => event.preventDefault()} className="self-end border-t border-white/30 pt-6">
-                        <p className="mb-6 text-xs text-[#aaa49b]">All fields are required.</p>
-                        <div className="grid gap-6 sm:grid-cols-2">
-                            <label className="text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
-                                Name
-                                <input type="text" name="name" autoComplete="name" required placeholder="Your name" className="mt-3 w-full border-b border-white/25 bg-transparent pb-3 text-sm tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
-                            </label>
-                            <label className="text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
-                                Email
-                                <input type="email" name="email" autoComplete="email" required placeholder="you@company.com" className="mt-3 w-full border-b border-white/25 bg-transparent pb-3 text-sm tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
-                            </label>
-                        </div>
-                        <label className="mt-7 block text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
-                            Project details
-                            <textarea name="project_details" required placeholder="A few words about the idea, timeline, or ambition..." rows={4} className="mt-3 w-full resize-none border-b border-white/25 bg-transparent pb-3 text-sm leading-6 tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
-                        </label>
-                        <button type="submit" className="mt-7 inline-flex items-center gap-3 border-b border-[#ff5634] pb-2 text-xs font-semibold tracking-[0.13em] text-[#f4f1eb] uppercase transition-colors hover:text-[#ff5634]">
-                            Send inquiry <span aria-hidden="true">↗</span>
-                        </button>
-                    </form>
+                    <Form
+                        action="/inquiries"
+                        method="post"
+                        resetOnSuccess
+                        options={{ preserveScroll: true }}
+                        className="self-end border-t border-white/30 pt-6"
+                    >
+                        {({ processing, errors }) => (
+                            <>
+                                {inquirySent && (
+                                    <p
+                                        role="status"
+                                        className="mb-6 text-sm text-[#f4f1eb]"
+                                    >
+                                        Thank you. Your inquiry has been
+                                        received.
+                                    </p>
+                                )}
+                                {Object.keys(errors).length > 0 && (
+                                    <div
+                                        role="alert"
+                                        className="mb-6 text-sm text-[#ff5634]"
+                                    >
+                                        {Object.entries(errors).map(
+                                            ([field, message]) => (
+                                                <p key={field}>{message}</p>
+                                            ),
+                                        )}
+                                    </div>
+                                )}
+                                <p className="mb-6 text-xs text-[#aaa49b]">
+                                    All fields are required.
+                                </p>
+                                <div className="grid gap-6 sm:grid-cols-2">
+                                    <label className="text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
+                                        Name
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            autoComplete="name"
+                                            required
+                                            placeholder="Your name"
+                                            className="mt-3 w-full border-b border-white/25 bg-transparent pb-3 text-sm tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]"
+                                        />
+                                    </label>
+                                    <label className="text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
+                                        Email
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            autoComplete="email"
+                                            required
+                                            placeholder="you@company.com"
+                                            className="mt-3 w-full border-b border-white/25 bg-transparent pb-3 text-sm tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]"
+                                        />
+                                    </label>
+                                </div>
+                                <label className="mt-7 block text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
+                                    Project details
+                                    <textarea
+                                        name="project_details"
+                                        required
+                                        placeholder="A few words about the idea, timeline, or ambition..."
+                                        rows={4}
+                                        className="mt-3 w-full resize-none border-b border-white/25 bg-transparent pb-3 text-sm leading-6 tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]"
+                                    />
+                                </label>
+                                <button
+                                    type="submit"
+                                    disabled={processing}
+                                    className="mt-7 inline-flex items-center gap-3 border-b border-[#ff5634] pb-2 text-xs font-semibold tracking-[0.13em] text-[#f4f1eb] uppercase transition-colors hover:text-[#ff5634] disabled:cursor-wait disabled:opacity-50"
+                                >
+                                    {processing ? 'Sending...' : 'Send inquiry'}{' '}
+                                    <span aria-hidden="true">↗</span>
+                                </button>
+                            </>
+                        )}
+                    </Form>
                 </div>
             </section>
 
