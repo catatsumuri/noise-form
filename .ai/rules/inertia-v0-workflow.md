@@ -30,10 +30,10 @@ paths:
 
 ## Build and branch boundaries
 
-- `v0/design` is the design/preview branch. The Laravel integration branch is `feat/noise-form`; `main` is not the target for experimental changes.
+- `v0/design` is the design/preview branch; `main` is the Laravel integration branch. Commit design/preview changes on `v0/design`, verify them, then merge `v0/design` into `main`.
 - `npm run dev:preview` and `npm run build:preview` use `vite.preview.config.ts` for a PHP-free v0 preview. `npm run dev` and `npm run build` use the Laravel Vite configuration in `vite.config.ts`.
-- Do not change the default Vite config to preview-only behavior. Do not copy `mock/`, root `index.html`, or preview-only Vite config into the Laravel-only integration branch.
-- When syncing design to Laravel, transfer the actual shared page components and any required assets/types/app changes, not the preview runtime. Preserve new Laravel controller/model/route/migration changes.
+- Both branches retain `mock/`, root `index.html`, and `vite.preview.config.ts` for the shared-page preview. Do not change the default Vite config to preview-only behavior; Laravel builds must continue to use the Laravel entry point.
+- When merging `v0/design` into `main`, preserve Laravel controller/model/route/migration changes and keep the shared page components, assets, types, and preview adapters aligned.
 - If v0 creates a new branch, compare and intentionally merge its UI changes into `v0/design`; never overwrite another branch's unrelated work.
 
 ## Checks before declaring success
