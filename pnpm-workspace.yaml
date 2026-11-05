@@ -3,3 +3,10 @@ packages:
 
 publicHoistPattern:
     - '@inertiajs/core'
+
+minimumReleaseAgeExclude:
+    - '@babel/helper-string-parser@7.29.13'
+    - '@babel/parser@7.29.13'
+    - '@babel/runtime@7.29.13'
+    - 'electron-to-chromium@1.5.477'
+    - 'laravel-vite-plugin@3.2.1'
