@@ -1,121 +1,117 @@
-# Laravel + React Starter Kit — i18n Edition
+# NOISE / FORM
 
 [English](README.md) | 日本語
 
-[公式の Laravel React スターターキット](https://laravel.com/docs/starter-kits) を元に、国際化(i18n)対応を組み込んだフォークです。
+Laravel・Inertia・React・TypeScript・Tailwind CSSで構築したスタジオサイトです。`welcome.tsx` を中心にデザインを変更し、記事管理と問い合わせ受付をLaravelが担当します。同じ公開ページを、PHP不要のv0向けプレビューでも表示します。
 
-## ライブデモ
+## 主な変更箇所
 
-https://react-starter-kit-i18n-production-sbhkku.laravel.cloud
+| 対象                                                         | ファイル                                         |
+| ------------------------------------------------------------ | ------------------------------------------------ |
+| トップ：ヒーロー、実績、サービス、紹介、問い合わせ、記事一覧 | `resources/js/pages/welcome.tsx`                 |
+| 記事詳細のレイアウト                                         | `resources/js/pages/updates/show.tsx`            |
+| 共通の記事propsの型                                          | `resources/js/types/update.ts`                   |
+| プレビュー用の架空の記事                                     | `mock/updates.ts`                                |
+| 記事・問い合わせのバックエンド                               | `app/Http/Controllers/`、`app/Models/Update.php` |
 
-デモ用のデータベースはシード後に読み取り専用(`chmod 444`)でロックされているため、新規登録・ログインなどの書き込みは database-is-readonly エラーになります。再デプロイのたびにリセットされます。
+実績・サービスなどトップページの文言は `welcome.tsx` に直接記述しています。Laravelの記事はDBから取得します。プレビュー用データを変更してもDBには反映されません。
 
-## 公式キットとの違い
+## Laravelで開発する
 
-- **日本語をプリセット** — `ja` ロケールが `en` と並んですぐ使える状態で入っている
-- **翻訳パイプライン** — `lang/vendor-patches/` でどのロケールを生成するか管理。JSON ファイルを追加して `lang:update` を実行するだけ
-- **React 側での翻訳** — Inertia の shared props 経由で、すべての React コンポーネントから `__()` ヘルパーが使える
-- **セッションベースのロケール永続化** — `LocalizationBySession` ミドルウェアにより、ページを再読み込みしても選択中のロケールが維持される
-- **AI エージェント向けルール** — `.ai/rules/`(upstream には存在しない)に、このフォーク独自の規約(React UI の翻訳方法、`lang/` を生成物として扱うこと、starter-kit 翻訳へのパッチ方法など)をコーディングエージェント向けに記載
-
-## 必要要件
-
-- PHP 8.3+
-- Node 20+
-- Laravel がサポートするデータベース(ローカル開発では SQLite で動作)
-
-## ロケールの追加
-
-このフォークの React UI にのみ存在する文言(ログイン/2FA/プロフィール画面など)は upstream の `laravel-lang/starter-kits` パッケージには含まれていないため、`lang/vendor-patches/` で上乗せする形になっています:
-
-- `lang/vendor-patches/source/react.json` — このフォークが upstream の `react.json` に追加する英語のソース文言
-- `lang/vendor-patches/locales/{locale}.json` — それらの文言のロケールごとの翻訳。完全な例として `lang/vendor-patches/locales/ja.json` を参照
-
-新しいロケール(例: `ko`)を追加する手順:
-
-1. コンポーネントで使っているカスタム文言が `lang/vendor-patches/source/react.json` にまだ無ければ、まずそこに追加する(英語のキー/値のペア)
-2. `lang/vendor-patches/locales/ko.json` を作成し、`source/react.json` の全キーを `lang/vendor-patches/locales/ja.json` と同じ構造で翻訳する。あるロケールで upstream が既にその文言を翻訳済みの場合のみキーを省略できる(`ja.json` が `"Warning"` を省略しているのはこの理由)。迷ったら省略せず翻訳する方が安全で、パッチは upstream の値を上書きするだけなので害はない
-3. vendor パッケージにパッチをマージし、翻訳ファイルを再生成する:
-    ```bash
-    composer patch-vendor
-    php artisan lang:update
-    ```
-
-`composer patch-vendor`(`scripts/patch-vendor.php`)は `lang/vendor-patches/source/` と `lang/vendor-patches/locales/` の内容を `vendor/laravel-lang/starter-kits/` 内の対応するファイルにマージし、あなたのパッチの値を upstream の値より優先します。続く `lang:update` が見つかった全ロケールについて `lang/{locale}.json` と `lang/{locale}/*.php` を再生成します。`patch-vendor` は `composer install`/`composer update` の後に自動実行され、`lang:update` も `composer update` の後に自動実行されますが、新しくロケールを追加した直後はすぐに生成されるよう両方を明示的に実行してください。
-
-## インストール
+PHP 8.3以上、Composer、Node 22（CIの使用バージョン）を使用します。ローカルDBの標準設定はSQLiteです。
 
 ```bash
-composer create-project catatsumuri/react-starter-kit-i18n my-app
-cd my-app
+git clone https://github.com/catatsumuri/noise-form.git
+cd noise-form
 composer setup
-```
-
-`composer setup` は以下を一括で実行します:
-
-```
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-npm install
-npm run build
-```
-
-## 開発
-
-```bash
 composer dev
 ```
 
-以下の4つのプロセスを並行して起動します:
+`composer setup` はPHP・npmの依存関係をインストールし、未作成なら `.env` を作成、アプリキーを生成して、マイグレーションとLaravel用ビルドを実行します。別のDBを使う場合は先に `.env` を設定してください。`composer dev` はViteを含むLaravelの開発プロセスを起動します。
 
-| プロセス          | コマンド                   |
-| ----------------- | -------------------------- |
-| HTTP サーバー     | `php artisan serve`        |
-| キューワーカー    | `php artisan queue:listen` |
-| ログビューア      | `php artisan pail`         |
-| Vite 開発サーバー | `npm run dev`              |
+個別に起動する場合は、別々のターミナルで `php artisan serve` と `npm run dev` を実行します。アプリはLaravelのHTTPサーバーで開きます。Viteはフロントエンドのアセットを配信します。
 
-## アーキテクチャ
-
-### バックエンドパッケージ
-
-| パッケージ                       | 役割                                                                 |
-| -------------------------------- | -------------------------------------------------------------------- |
-| `laravel-lang/common`            | 翻訳パイプラインの中核(`lang:update` コマンド)                       |
-| `laravel-lang/routes`            | `LocalizationBySession` ミドルウェア                                 |
-| `erag/laravel-lang-sync-inertia` | `lang/{locale}.json` を Inertia の shared props として `lang` に同期 |
-| `laravel/wayfinder`              | フロントエンド向けの型安全なルート参照                               |
-
-### フロントエンド
-
-- React 19 + TypeScript + Vite
-- [shadcn/ui](https://ui.shadcn.com) + [Radix UI](https://www.radix-ui.com) コンポーネント
-- Tailwind CSS
-- `@erag/lang-sync-inertia` — React コンポーネント内で翻訳を扱う `lang()` / `__()` フック
-
-### 翻訳がフロントエンドに届くまで
-
-```
-lang/ja.json
-    ↓  HandleInertiaRequests::share()
-Inertia shared prop: { lang: { "Log in": "ログイン", ... } }
-    ↓  @erag/lang-sync-inertia
-const { __ } = lang()
-    ↓
-__('Log in')  →  "ログイン"
-```
-
-## コード品質
+ローカルで記事サンプルを追加する場合:
 
 ```bash
-composer lint          # PHP (Pint)
-npm run check          # JS/TS の lint・フォーマットチェック
-npm run types:check    # TypeScript
-composer test          # PHPUnit
-composer ci:check      # 上記すべて
+php artisan db:seed --class=UpdateSeeder
 ```
+
+同じslugの記事が既にあれば、その内容を維持します。このシーダーが作成する著者レコードは、管理者ログイン用のアカウントではありません。
+
+## v0・PHP不要のプレビュー
+
+公開ページのプレビューにはPHPもDBも不要です。
+
+```bash
+npm install
+npm run dev:preview
+```
+
+Viteが表示するURLを開きます。`/` がトップページ、`/updates/{slug}` が `mock/updates.ts` の記事詳細です。
+
+| 用途         | 開発                  | ビルド                  | 設定                                        |
+| ------------ | --------------------- | ----------------------- | ------------------------------------------- |
+| Laravel      | `npm run dev`         | `npm run build`         | `vite.config.ts` → `vite.laravel.config.ts` |
+| v0プレビュー | `npm run dev:preview` | `npm run build:preview` | `vite.preview.config.ts`                    |
+
+v0側のプレビュー環境では、開発コマンドに `npm run dev:preview`、プレビュービルドに `npm run build:preview` を指定します。`npm run dev` はLaravel用アセットサーバーです。外部のv0プロジェクトで実際に選択されている起動設定は未確認です。
+
+`mock/main.tsx` が本番と同じ公開ページを直接読み込みます。プレビュー設定がInertiaを小さな代替実装に差し替え、サンプルのpropsを渡します。リンクは通常のブラウザ遷移を使います。問い合わせ送信はプレビュー用の案内を表示し、保存しません。認証・管理画面はプレビュー対象外です。
+
+画面の実装は共通に保ち、実際のページコンポーネントを編集してください。別のモック画面やNext.jsアプリは作りません。propsやInertia APIを追加するときは、プレビューのデータ・代替実装も合わせて更新します。[プレビューの説明](mock/README.md)と[運用ルール](.ai/rules/inertia-v0-workflow.md)も参照してください。
+
+## ブランチ運用
+
+1. デザイン・プレビューの変更は `v0/design` で行い、そこでコミットします。
+2. 変更に関係するプレビューとLaravelの動作を確認します。
+3. Laravel側の変更を維持しながら、`v0/design` を `main` にマージします。
+4. 変更を公開するときは両ブランチをpushします。
+
+`main` がLaravelの統合ブランチです。プレビュー関連ファイルは両ブランチで保持し、標準のVite設定はLaravel用のまま維持します。v0が別ブランチを作成した場合は、UI変更を確認して先に `v0/design` へ取り込みます。
+
+## バックエンド
+
+| ルート             | 役割                                               |
+| ------------------ | -------------------------------------------------- |
+| `/`                | `HomeController` が公開済み記事を渡すトップページ  |
+| `/updates/{slug}`  | 公開済み記事の詳細                                 |
+| `POST /inquiries`  | 問い合わせの検証・保存。1分あたり5リクエストに制限 |
+| `/admin/updates`   | 記事の作成・閲覧・編集・削除                       |
+| `/admin/inquiries` | 受信した問い合わせの一覧                           |
+
+記事は下書き（`published_at` が空）、予約公開、公開済みに対応しています。公開ページでは公開日時を迎えた記事だけを返します。本文は段落の配列として保存します。画像パスの表示には対応していますが、記事編集画面に画像アップロード機能はありません。
+
+管理ルートのアクセス条件は現在、ログインとメール確認です。管理者ロールによる追加の制限はありません。スターターキット由来の認証・アカウント設定画面も残しています。問い合わせはDBに保存し、現在のコントローラーから通知メールは送信しません。
+
+## チェック
+
+```bash
+npm run check          # 整形・Lintの検査
+npm run check:fix      # 整形・Lintの自動修正
+npm run types:check    # TypeScript
+composer lint:check   # PHPの整形検査
+composer types:check  # PHPStan
+composer test         # PHPの整形検査・PHPStan・PHPUnit
+composer ci:check     # フロントエンドの検査後、composer test
+```
+
+Laravel Sail環境が起動している場合は、`./vendor/bin/sail composer ci:check` のようにコマンドの前に `./vendor/bin/sail` を付けます。
+
+CIは `main` へのpushとpull requestで `composer setup`、`composer ci:check` を実行します。公開ページやプレビューの代替実装を変更したら、別途 `npm run build:preview` も実行してください。プレビュー出力の `dist/` はGit・整形・Lintの対象外です。
+
+## 引き継いでいる多言語対応
+
+Laravel + React Starter Kit — i18n Editionをベースにしています。認証・設定画面には英語・日本語の翻訳機能を引き継いでいます。公開ページの文言は現在、ページコンポーネントに直接記述しています。
+
+ソース文言を `lang/vendor-patches/source/react.json`、対応する翻訳を `lang/vendor-patches/locales/{locale}.json` に追加し、次のコマンドで再生成します。
+
+```bash
+composer patch-vendor
+php artisan lang:update
+```
+
+生成された `lang/` の出力はGit管理対象外です。[翻訳ルール](.ai/rules/lang.md)と[スターターキット翻訳のパッチ](.ai/rules/starter-kits.md)も参照してください。
 
 ## ライセンス
 
