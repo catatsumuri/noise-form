@@ -5,7 +5,7 @@ import { defineConfig } from 'vite-plus';
 
 const file = (path: string) => fileURLToPath(new URL(path, import.meta.url));
 
-// PHP-free preview with an independent mock welcome page.
+// PHP-free preview of the real Laravel/Inertia pages with fixture props.
 export default defineConfig({
     plugins: [react(), tailwindcss()],
     resolve: {

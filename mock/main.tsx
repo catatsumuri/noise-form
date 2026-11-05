@@ -1,18 +1,29 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import Welcome from './welcome';
+import Welcome from '../resources/js/pages/welcome';
 import UpdateShow from '../resources/js/pages/updates/show';
+import type { UpdateSummary } from '../resources/js/types/update';
 import { previewArticles } from './updates';
 import '../resources/css/app.css';
 
-// The mock welcome stays independent of the Laravel/Inertia welcome page.
-// Vite's SPA fallback serves index.html on direct article URLs.
+// Render the actual Inertia pages with preview-only props and route lookup.
+const previewUpdates: UpdateSummary[] = Object.values(previewArticles).map(
+    ({ slug, title, description, type, date, image, imageAlt }) => ({
+        slug,
+        title,
+        description,
+        type,
+        date,
+        image,
+        imageAlt,
+    }),
+);
 const pathname = window.location.pathname.replace(/\/+$/, '') || '/';
 const match = /^\/updates\/([a-z0-9-]+)$/.exec(pathname);
 const article = match ? previewArticles[match[1]] : undefined;
 
 function PreviewApp() {
-    if (pathname === '/') return <Welcome />;
+    if (pathname === '/') return <Welcome updates={previewUpdates} />;
     if (article) return <UpdateShow article={article} />;
 
     return (

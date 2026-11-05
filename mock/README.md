@@ -1,15 +1,25 @@
 # NOISE / FORM design preview
 
-Run `npm run dev:preview` for the PHP-free preview, or `npm run build:preview`
-for a static build. The preview uses `vite.preview.config.ts` and `index.html`.
+v0 and Laravel render **the same TSX pages** from `resources/js/pages/`.
+The preview only replaces the data provider and navigation mechanism.
 
-- `/` renders `mock/welcome.tsx`, an independent static design snapshot.
-- `/updates/{slug}` renders `resources/js/pages/updates/show.tsx` with fixture
-  props supplied by `mock/updates.ts`.
-- `resources/js/pages/welcome.tsx` is the Laravel/Inertia page. The preview
-  does not import it. Its updates come from the database through Inertia props.
+| URL | Shared page | Source of props |
+| --- | --- | --- |
+| `/` | `resources/js/pages/welcome.tsx` | `mock/updates.ts` in v0; HomeController in Laravel |
+| `/updates/{slug}` | `resources/js/pages/updates/show.tsx` | `mock/updates.ts` in v0; UpdateController in Laravel |
 
-Normal `npm run dev` and `npm run build` use the Laravel configuration.
-The existing `dev:laravel` and `build:laravel` aliases also remain available.
+`mock/main.tsx` injects fixtures and matches the URL for the PHP-free preview.
+`mock/inertia.tsx` maps Inertia's Link to a normal anchor for Vite's SPA
+fallback, which supports direct URLs, refresh, and back/forward. Laravel
+uses actual Inertia navigation instead.
 
-Article fixtures are fictional. Laravel does not read mock data.
+## Commands
+
+- v0 PHP-free preview: `npm run dev:preview`
+- Preview build: `npm run build:preview`
+- Laravel + Inertia: `npm run dev`
+- Laravel build: `npm run build`
+
+Use `vite.preview.config.ts` for v0 and `vite.config.ts` for Laravel.
+Do not introduce a second `mock/welcome.tsx`: edit the shared page directly.
+Articles in the mock are fictional; Laravel gets them from the database.

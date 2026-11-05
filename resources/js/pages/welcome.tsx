@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react';
 import type { UpdateSummary } from '@/types/update';
 
 const projects = [
@@ -179,19 +180,19 @@ export default function Welcome({ updates }: { updates: UpdateSummary[] }) {
                                 <div>
                                     <p className="mb-2 text-[10px] font-semibold tracking-[0.16em] text-[#aaa49b] uppercase">{update.type}</p>
                                     <h3 className="max-w-2xl text-2xl font-semibold leading-tight tracking-[-0.045em] sm:text-3xl">
-                                        <a href={`/updates/${update.slug}`} className="transition-colors hover:text-[#ff5634] focus-visible:underline focus-visible:underline-offset-4">
+                                        <Link href={`/updates/${update.slug}`} className="transition-colors hover:text-[#ff5634] focus-visible:underline focus-visible:underline-offset-4">
                                             {update.title}
-                                        </a>
+                                        </Link>
                                     </h3>
                                     <p className="mt-3 max-w-xl text-sm leading-6 text-[#c7c1b9]">{update.description}</p>
                                 </div>
-                                <a
+                                <Link
                                     href={`/updates/${update.slug}`}
                                     aria-label={`Read: ${update.title}`}
                                     className="text-2xl text-[#d0cac2] transition-colors hover:text-[#ff5634] sm:pt-5"
                                 >
                                     ↗
-                                </a>
+                                </Link>
                             </article>
                         ))}
                     </div>

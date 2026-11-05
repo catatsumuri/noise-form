@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react';
 import type { UpdateArticle } from '@/types/update';
 
 type Props = {
@@ -11,9 +12,9 @@ export default function Show({ article }: Props) {
 
             <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#101010]/80 text-[#f4f1eb] backdrop-blur-xl">
                 <div className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-5 sm:px-10 lg:px-16">
-                    <a className="text-lg font-bold tracking-[-0.07em]" href="/">
+                    <Link className="text-lg font-bold tracking-[-0.07em]" href="/">
                         NOISE / FORM<span className="align-top text-[10px]">®</span>
-                    </a>
+                    </Link>
                     <nav className="flex gap-5 text-[10px] font-semibold tracking-[0.16em] uppercase sm:gap-8" aria-label="Article navigation">
                         <a href="/#work" className="transition-colors hover:text-[#ff5634]">Work</a>
                         <a href="/#updates" className="transition-colors hover:text-[#ff5634]">Updates</a>
@@ -82,7 +83,7 @@ export default function Show({ article }: Props) {
                 <div className="mx-auto flex max-w-[1440px] flex-wrap justify-between gap-4 text-[10px] tracking-[0.14em] uppercase">
                     <span className="font-semibold">NOISE / FORM®</span>
                     <span className="text-[#aaa49b]">Berlin, Germany — Fictional studio / Design PoC</span>
-                    <a href="/" className="transition-colors hover:text-[#ff5634]">Return home ↗</a>
+                    <Link href="/" className="transition-colors hover:text-[#ff5634]">Return home ↗</Link>
                 </div>
             </footer>
         </main>

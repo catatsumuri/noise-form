@@ -1,5 +1,5 @@
-// Preview-only stand-ins. The original welcome.tsx is never modified.
-import { useEffect, type AnchorHTMLAttributes, type ReactNode } from 'react';
+// Preview-only Inertia stand-ins for the same React pages used by Laravel.
+import { useEffect, type AnchorHTMLAttributes } from 'react';
 
 export function Head({ title }: { title?: string }) {
     useEffect(() => {
