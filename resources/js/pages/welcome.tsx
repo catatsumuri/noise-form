@@ -257,24 +257,45 @@ export default function Welcome() {
             </section>
 
             {/* 05 / Contact */}
-            <section id="contact" className="relative overflow-hidden px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
+            <section id="contact" className="relative overflow-hidden border-t border-white/10 px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
                 <img
                     src="/images/noise-form/contact.webp"
                     alt=""
                     aria-hidden="true"
                     loading="lazy"
-                    className="pointer-events-none absolute inset-y-0 right-0 h-full w-[75%] object-cover object-center opacity-50 [mask-image:linear-gradient(to_right,transparent_0%,black_70%)]"
+                    className="pointer-events-none absolute inset-y-0 right-0 h-full w-[75%] object-cover object-center opacity-35 [mask-image:linear-gradient(to_right,transparent_0%,black_70%)]"
                 />
-                <div className="relative mx-auto max-w-[1312px]">
-                    <p className="mb-7 text-[11px] font-semibold tracking-[0.13em] uppercase">05 / Contact</p>
-                    <h2 className="max-w-5xl text-[clamp(3.4rem,7vw,8rem)] font-bold leading-[0.92] tracking-[-0.075em] uppercase">
-                        Have a project
-                        <br />
-                        in mind?
-                        <br />
-                        <span className="text-[#ff5634]">Let’s talk.</span>
-                    </h2>
-                    <p className="mt-9 text-sm text-[#aaa49b]">Contact functionality will be added in a later phase.</p>
+                <div className="relative mx-auto grid max-w-[1312px] gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-24">
+                    <div>
+                        <p className="mb-7 text-[11px] font-semibold tracking-[0.13em] uppercase">05 / Contact</p>
+                        <h2 className="max-w-3xl text-[clamp(3.4rem,7vw,8rem)] font-bold leading-[0.92] tracking-[-0.075em] uppercase">
+                            Have a project
+                            <br />
+                            in mind?
+                            <br />
+                            <span className="text-[#ff5634]">Let&apos;s talk.</span>
+                        </h2>
+                        <p className="mt-9 max-w-sm text-sm leading-6 text-[#aaa49b]">Tell us what you&apos;re imagining. We&apos;ll bring the right mix of design, technology, and curiosity.</p>
+                    </div>
+                    <div className="self-end border-t border-white/30 pt-6">
+                        <div className="grid gap-6 sm:grid-cols-2">
+                            <label className="text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
+                                Name
+                                <input type="text" placeholder="Your name" className="mt-3 w-full border-b border-white/25 bg-transparent pb-3 text-sm tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
+                            </label>
+                            <label className="text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
+                                Email
+                                <input type="email" placeholder="you@company.com" className="mt-3 w-full border-b border-white/25 bg-transparent pb-3 text-sm tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
+                            </label>
+                        </div>
+                        <label className="mt-7 block text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
+                            Project details
+                            <textarea placeholder="A few words about the idea, timeline, or ambition..." rows={4} className="mt-3 w-full resize-none border-b border-white/25 bg-transparent pb-3 text-sm leading-6 tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
+                        </label>
+                        <button type="button" className="mt-7 inline-flex items-center gap-3 border-b border-[#ff5634] pb-2 text-xs font-semibold tracking-[0.13em] text-[#f4f1eb] uppercase transition-colors hover:text-[#ff5634]">
+                            Send inquiry <span aria-hidden="true">↗</span>
+                        </button>
+                    </div>
                 </div>
             </section>
 
