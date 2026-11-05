@@ -34,7 +34,7 @@ export default function Show({ article }: Props) {
             </header>
 
             <article>
-                <header className="relative isolate mx-auto min-h-[min(760px,78vh)] max-w-[1440px] overflow-hidden px-6 pb-20 pt-36 sm:px-10 lg:grid lg:grid-cols-[minmax(0,1fr)_250px] lg:gap-16 lg:px-16 lg:pb-28 lg:pt-44">
+                <header className="relative isolate mx-auto min-h-[min(560px,60vh)] max-w-[1440px] overflow-hidden px-6 pb-14 pt-32 sm:px-10 lg:grid lg:grid-cols-[minmax(0,1fr)_250px] lg:gap-16 lg:px-16 lg:pb-20 lg:pt-36">
                     <div className="pointer-events-none absolute inset-y-0 right-0 -z-10 w-full lg:w-[72%]">
                         <img
                             src={article.image}
