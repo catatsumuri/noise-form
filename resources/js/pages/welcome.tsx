@@ -1,6 +1,4 @@
-// NOISE / FORM — Phase 1: a static, single-page design baseline.
-// This exact component runs in Laravel/Inertia and the PHP-free v0 preview.
-// No Inertia hooks, server props, routing, authentication or API requests.
+import type { UpdateSummary } from '@/types/update';
 
 const projects = [
     {
@@ -40,31 +38,7 @@ const services = [
     'Experimental R&D',
 ];
 
-const updates = [
-    {
-        date: '05.2026',
-        slug: 'new-chapter-in-berlin',
-        type: 'Studio note',
-        title: 'Noise / Form opens a new chapter in Berlin.',
-        description: 'A tighter team, wider field of view, and more room for experiments at the edge of design and technology.',
-    },
-    {
-        date: '03.2026',
-        slug: 'signal-field-enters-the-world',
-        type: 'New work',
-        title: 'Signal Field enters the world.',
-        description: 'Our latest interactive installation turns motion, light, and sound into a shared physical language.',
-    },
-    {
-        date: '11.2025',
-        slug: 'the-feeling-of-digital-matter',
-        type: 'Field note',
-        title: 'Researching the feeling of digital matter.',
-        description: 'Notes from our ongoing study of texture, atmosphere, and the spaces between screen and body.',
-    },
-];
-
-export default function Welcome() {
+export default function Welcome({ updates }: { updates: UpdateSummary[] }) {
     return (
         <main id="top" className="min-h-screen overflow-x-hidden bg-[#0b0b0b] font-sans text-[#f4f1eb] antialiased">
             <title>NOISE / FORM — Creative Technology Studio</title>
@@ -184,10 +158,23 @@ export default function Welcome() {
                         <p className="max-w-[14rem] text-xs leading-5 tracking-[0.08em] text-[#aaa49b] uppercase">Notes, launches, and signals from our orbit.</p>
                     </div>
                     <div className="divide-y divide-white/15 border-y border-white/15">
+                        {updates.length === 0 && (
+                            <p className="py-6 text-sm text-[#aaa49b]">No updates yet.</p>
+                        )}
                         {updates.map((update) => (
-                            <article key={update.date} className="grid gap-5 py-6 sm:grid-cols-[7rem_1fr_auto] sm:items-start sm:gap-8 lg:py-7">
-                                <div className="flex items-center gap-3 text-[11px] font-semibold tracking-[0.13em] text-[#ff5634] uppercase">
+                            <article key={update.slug} className="grid gap-5 py-6 sm:grid-cols-[7rem_1fr_auto] sm:items-start sm:gap-8 lg:py-7">
+                                <div className="flex flex-col items-start gap-3 text-[11px] font-semibold tracking-[0.13em] text-[#ff5634] uppercase">
                                     <span>{update.date}</span>
+                                    {update.image && (
+                                        <img
+                                            src={update.image}
+                                            alt={update.imageAlt ?? ''}
+                                            width={112}
+                                            height={75}
+                                            loading="lazy"
+                                            className="aspect-[3/2] w-28 rounded-sm object-cover"
+                                        />
+                                    )}
                                 </div>
                                 <div>
                                     <p className="mb-2 text-[10px] font-semibold tracking-[0.16em] text-[#aaa49b] uppercase">{update.type}</p>

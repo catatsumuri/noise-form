@@ -1,15 +1,4 @@
-// Render-only article detail page. Laravel can later pass an article as an
-// Inertia page prop; the v0 preview supplies the exact same prop from mock data.
-export type UpdateArticle = {
-    slug: string;
-    date: string;
-    type: string;
-    title: string;
-    description: string;
-    image: string;
-    imageAlt: string;
-    paragraphs: string[];
-};
+import type { UpdateArticle } from '@/types/update';
 
 type Props = {
     article: UpdateArticle;
@@ -36,12 +25,12 @@ export default function Show({ article }: Props) {
             <article>
                 <header className="relative isolate mx-auto min-h-[min(560px,60vh)] max-w-[1440px] overflow-hidden px-6 pb-14 pt-32 sm:px-10 lg:grid lg:grid-cols-[minmax(0,1fr)_250px] lg:gap-16 lg:px-16 lg:pb-20 lg:pt-36">
                     <div className="pointer-events-none absolute inset-y-0 right-0 -z-10 w-full lg:w-[72%]">
-                        <img
+                        {article.image && <img
                             src={article.image}
                             alt=""
                             aria-hidden="true"
                             className="h-full w-full object-cover opacity-35 mix-blend-screen [mask-image:linear-gradient(90deg,transparent_0%,black_42%,black_100%)]"
-                        />
+                        />}
                         <div className="absolute inset-0 bg-gradient-to-r from-[#101010] via-[#101010]/55 to-transparent" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#101010] via-transparent to-[#101010]/10" />
                     </div>
@@ -59,7 +48,7 @@ export default function Show({ article }: Props) {
                         </div>
                     </div>
                     <div className="relative z-10 mt-16 max-w-sm border-l border-white/15 pl-5 lg:col-start-2 lg:mt-auto lg:pb-2">
-                        <p className="text-[10px] font-semibold tracking-[0.16em] text-[#aaa49b] uppercase">Field note / 001</p>
+                        <p className="text-[10px] font-semibold tracking-[0.16em] text-[#aaa49b] uppercase">{article.type}</p>
                         <p className="mt-4 text-base leading-7 text-[#d5d0c7]">{article.description}</p>
                     </div>
                     <div className="absolute bottom-8 left-6 z-10 flex items-center gap-3 text-[10px] font-semibold tracking-[0.16em] text-white/50 uppercase sm:left-10 lg:left-16">
@@ -83,7 +72,7 @@ export default function Show({ article }: Props) {
                             <a href="/#updates" className="inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.16em] uppercase transition-colors hover:text-[#ff5634]">
                                 <span aria-hidden="true">←</span> Back to all updates
                             </a>
-                            <span className="text-[10px] tracking-[0.16em] text-[#aaa49b] uppercase">11.2025 / Berlin</span>
+                            <span className="text-[10px] tracking-[0.16em] text-[#aaa49b] uppercase">{article.date} / Berlin</span>
                         </div>
                     </div>
                 </div>

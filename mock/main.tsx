@@ -1,12 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import Welcome from '../resources/js/pages/welcome';
+import Welcome from './welcome';
 import UpdateShow from '../resources/js/pages/updates/show';
 import { previewArticles } from './updates';
 import '../resources/css/app.css';
 
-// Render actual application page components; only the route and prop values
-// are mocked here. Vite's SPA fallback serves index.html on direct article URLs.
+// The mock welcome stays independent of the Laravel/Inertia welcome page.
+// Vite's SPA fallback serves index.html on direct article URLs.
 const pathname = window.location.pathname.replace(/\/+$/, '') || '/';
 const match = /^\/updates\/([a-z0-9-]+)$/.exec(pathname);
 const article = match ? previewArticles[match[1]] : undefined;

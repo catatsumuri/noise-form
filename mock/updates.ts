@@ -1,5 +1,5 @@
-// Preview-only article fixtures. Laravel will provide article props later.
-import type { UpdateArticle } from '../resources/js/pages/updates/show';
+// Preview-only fixtures; Laravel reads articles from the database.
+import type { UpdateArticle } from '../resources/js/types/update';
 
 export const previewArticles: Record<string, UpdateArticle> = {
     'new-chapter-in-berlin': {
