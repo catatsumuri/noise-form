@@ -47,7 +47,7 @@ export default function Welcome() {
 
             {/* 00 / Header and hero */}
             <section className="relative isolate overflow-hidden border-b border-white/10">
-                <header className="relative z-20 mx-auto flex w-full max-w-[1440px] items-center justify-between gap-5 px-6 py-6 sm:px-10 lg:px-16 lg:py-7">
+                <header className="sticky top-0 z-20 mx-auto flex w-full max-w-[1440px] items-center justify-between gap-5 px-6 py-6 sm:px-10 lg:px-16 lg:py-7">
                     <a href="#top" className="text-lg font-bold tracking-[-0.07em]">
                         NOISE / FORM<span className="align-top text-[10px]">®</span>
                     </a>
