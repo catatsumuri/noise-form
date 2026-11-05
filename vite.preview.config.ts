@@ -10,8 +10,14 @@ export default defineConfig({
     plugins: [react(), tailwindcss()],
     resolve: {
         alias: [
-            { find: '@inertiajs/react', replacement: file('./mock/inertia.tsx') },
-            { find: '@erag/lang-sync-inertia/react', replacement: file('./mock/lang.ts') },
+            {
+                find: '@inertiajs/react',
+                replacement: file('./mock/inertia.tsx'),
+            },
+            {
+                find: '@erag/lang-sync-inertia/react',
+                replacement: file('./mock/lang.ts'),
+            },
             { find: '@/routes', replacement: file('./mock/routes.ts') },
             { find: /^@\//, replacement: file('./resources/js/') },
         ],

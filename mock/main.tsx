@@ -28,9 +28,13 @@ function PreviewApp() {
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-center gap-5 bg-[#0b0b0b] px-6 text-center text-white">
-            <p className="text-sm tracking-[0.2em] text-[#ff5634] uppercase">404 / Preview</p>
+            <p className="text-sm tracking-[0.2em] text-[#ff5634] uppercase">
+                404 / Preview
+            </p>
             <h1 className="text-4xl font-bold">Page not found.</h1>
-            <a className="underline" href="/">Return home</a>
+            <a className="underline" href="/">
+                Return home
+            </a>
         </main>
     );
 }

@@ -36,10 +36,10 @@ https://react-starter-kit-i18n-production-sbhkku.laravel.cloud
 1. コンポーネントで使っているカスタム文言が `lang/vendor-patches/source/react.json` にまだ無ければ、まずそこに追加する(英語のキー/値のペア)
 2. `lang/vendor-patches/locales/ko.json` を作成し、`source/react.json` の全キーを `lang/vendor-patches/locales/ja.json` と同じ構造で翻訳する。あるロケールで upstream が既にその文言を翻訳済みの場合のみキーを省略できる(`ja.json` が `"Warning"` を省略しているのはこの理由)。迷ったら省略せず翻訳する方が安全で、パッチは upstream の値を上書きするだけなので害はない
 3. vendor パッケージにパッチをマージし、翻訳ファイルを再生成する:
-   ```bash
-   composer patch-vendor
-   php artisan lang:update
-   ```
+    ```bash
+    composer patch-vendor
+    php artisan lang:update
+    ```
 
 `composer patch-vendor`(`scripts/patch-vendor.php`)は `lang/vendor-patches/source/` と `lang/vendor-patches/locales/` の内容を `vendor/laravel-lang/starter-kits/` 内の対応するファイルにマージし、あなたのパッチの値を upstream の値より優先します。続く `lang:update` が見つかった全ロケールについて `lang/{locale}.json` と `lang/{locale}/*.php` を再生成します。`patch-vendor` は `composer install`/`composer update` の後に自動実行され、`lang:update` も `composer update` の後に自動実行されますが、新しくロケールを追加した直後はすぐに生成されるよう両方を明示的に実行してください。
 
@@ -70,23 +70,23 @@ composer dev
 
 以下の4つのプロセスを並行して起動します:
 
-| プロセス | コマンド |
-|---------|------|
-| HTTP サーバー | `php artisan serve` |
-| キューワーカー | `php artisan queue:listen` |
-| ログビューア | `php artisan pail` |
-| Vite 開発サーバー | `npm run dev` |
+| プロセス          | コマンド                   |
+| ----------------- | -------------------------- |
+| HTTP サーバー     | `php artisan serve`        |
+| キューワーカー    | `php artisan queue:listen` |
+| ログビューア      | `php artisan pail`         |
+| Vite 開発サーバー | `npm run dev`              |
 
 ## アーキテクチャ
 
 ### バックエンドパッケージ
 
-| パッケージ | 役割 |
-|---------|------|
-| `laravel-lang/common` | 翻訳パイプラインの中核(`lang:update` コマンド) |
-| `laravel-lang/routes` | `LocalizationBySession` ミドルウェア |
+| パッケージ                       | 役割                                                                 |
+| -------------------------------- | -------------------------------------------------------------------- |
+| `laravel-lang/common`            | 翻訳パイプラインの中核(`lang:update` コマンド)                       |
+| `laravel-lang/routes`            | `LocalizationBySession` ミドルウェア                                 |
 | `erag/laravel-lang-sync-inertia` | `lang/{locale}.json` を Inertia の shared props として `lang` に同期 |
-| `laravel/wayfinder` | フロントエンド向けの型安全なルート参照 |
+| `laravel/wayfinder`              | フロントエンド向けの型安全なルート参照                               |
 
 ### フロントエンド
 
