@@ -45,20 +45,20 @@ export default function Welcome() {
         <main id="top" className="min-h-screen overflow-x-hidden bg-[#0b0b0b] font-sans text-[#f4f1eb] antialiased">
             <title>NOISE / FORM — Creative Technology Studio</title>
 
-            {/* 00 / Header and hero */}
-            <section className="relative isolate border-b border-white/10">
-                <header className="fixed inset-x-0 top-0 z-[9999] mx-auto flex w-full max-w-[1440px] items-center justify-between gap-5 border-b border-white/5 bg-gradient-to-b from-[#0b0b0b]/70 to-[#0b0b0b]/20 px-6 py-6 backdrop-blur-md supports-[backdrop-filter]:bg-[#0b0b0b]/30 sm:px-10 lg:px-16 lg:py-7">
-                    <a href="#top" className="text-lg font-bold tracking-[-0.07em]">
-                        NOISE / FORM<span className="align-top text-[10px]">®</span>
-                    </a>
-                    <nav aria-label="Main navigation" className="flex items-center gap-4 text-[10px] font-semibold tracking-[0.13em] uppercase sm:gap-8 sm:text-[11px]">
-                        <a href="#work" className="transition-colors hover:text-[#ff5634]">Work</a>
-                        <a href="#studio" className="hidden transition-colors hover:text-[#ff5634] sm:inline">Studio</a>
-                        <a href="#services" className="hidden transition-colors hover:text-[#ff5634] sm:inline">Services</a>
-                        <a href="#contact" className="transition-colors hover:text-[#ff5634]">Contact</a>
-                    </nav>
-                </header>
+            <header className="fixed inset-x-0 top-0 z-[9999] mx-auto flex w-full max-w-[1440px] items-center justify-between gap-5 border-b border-white/5 bg-gradient-to-b from-[#0b0b0b]/70 to-[#0b0b0b]/20 px-6 py-6 backdrop-blur-md supports-[backdrop-filter]:bg-[#0b0b0b]/30 sm:px-10 lg:px-16 lg:py-7">
+                <a href="#top" className="text-lg font-bold tracking-[-0.07em]">
+                    NOISE / FORM<span className="align-top text-[10px]">®</span>
+                </a>
+                <nav aria-label="Main navigation" className="flex items-center gap-4 text-[10px] font-semibold tracking-[0.13em] uppercase sm:gap-8 sm:text-[11px]">
+                    <a href="#work" className="transition-colors hover:text-[#ff5634]">Work</a>
+                    <a href="#studio" className="hidden transition-colors hover:text-[#ff5634] sm:inline">Studio</a>
+                    <a href="#services" className="hidden transition-colors hover:text-[#ff5634] sm:inline">Services</a>
+                    <a href="#contact" className="transition-colors hover:text-[#ff5634]">Contact</a>
+                </nav>
+            </header>
 
+            {/* 00 / Hero */}
+            <section className="relative isolate border-b border-white/10">
                 <div className="relative mx-auto min-h-[calc(100svh-78px)] max-w-[1440px] px-6 pb-14 pt-16 sm:px-10 sm:pb-20 lg:min-h-[690px] lg:px-16 lg:pb-24 lg:pt-20">
                     <div className="pointer-events-none absolute inset-0 z-0 lg:left-[34%]">
                         <img
