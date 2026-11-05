@@ -1,6 +1,4 @@
-// NOISE / FORM — Phase 1: a static, single-page design baseline.
-// This exact component runs in Laravel/Inertia and the PHP-free v0 preview.
-// No Inertia hooks, server props, routing, authentication or API requests.
+import type { UpdateSummary } from '@/types/update';
 
 const projects = [
     {
@@ -40,7 +38,7 @@ const services = [
     'Experimental R&D',
 ];
 
-export default function Welcome() {
+export default function Welcome({ updates }: { updates: UpdateSummary[] }) {
     return (
         <main id="top" className="min-h-screen overflow-x-hidden bg-[#0b0b0b] font-sans text-[#f4f1eb] antialiased">
             <title>NOISE / FORM — Creative Technology Studio</title>
@@ -51,6 +49,7 @@ export default function Welcome() {
                 </a>
                 <nav aria-label="Main navigation" className="flex items-center gap-4 text-[10px] font-semibold tracking-[0.13em] uppercase sm:gap-8 sm:text-[11px]">
                     <a href="#work" className="transition-colors hover:text-[#ff5634]">Work</a>
+                    <a href="#updates" className="hidden transition-colors hover:text-[#ff5634] sm:inline">Updates</a>
                     <a href="#studio" className="hidden transition-colors hover:text-[#ff5634] sm:inline">Studio</a>
                     <a href="#services" className="hidden transition-colors hover:text-[#ff5634] sm:inline">Services</a>
                     <a href="#contact" className="transition-colors hover:text-[#ff5634]">Contact</a>
@@ -148,7 +147,58 @@ export default function Welcome() {
                 </div>
             </section>
 
-            {/* 03 / Services */}
+            {/* 03 / Latest updates */}
+            <section id="updates" className="border-y border-white/10 bg-[#151515] px-6 py-20 sm:px-10 lg:px-16 lg:py-24">
+                <div className="mx-auto max-w-[1312px]">
+                    <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
+                        <div>
+                            <p className="mb-4 text-[11px] font-semibold tracking-[0.13em] text-[#ff5634] uppercase">03 / Latest updates</p>
+                            <h2 className="max-w-2xl text-[clamp(2.8rem,5vw,5.5rem)] font-bold leading-[0.92] tracking-[-0.07em]">A pulse from the studio.</h2>
+                        </div>
+                        <p className="max-w-[14rem] text-xs leading-5 tracking-[0.08em] text-[#aaa49b] uppercase">Notes, launches, and signals from our orbit.</p>
+                    </div>
+                    <div className="divide-y divide-white/15 border-y border-white/15">
+                        {updates.length === 0 && (
+                            <p className="py-6 text-sm text-[#aaa49b]">No updates yet.</p>
+                        )}
+                        {updates.map((update) => (
+                            <article key={update.slug} className="grid gap-5 py-6 sm:grid-cols-[7rem_1fr_auto] sm:items-start sm:gap-8 lg:py-7">
+                                <div className="flex flex-col items-start gap-3 text-[11px] font-semibold tracking-[0.13em] text-[#ff5634] uppercase">
+                                    <span>{update.date}</span>
+                                    {update.image && (
+                                        <img
+                                            src={update.image}
+                                            alt={update.imageAlt ?? ''}
+                                            width={112}
+                                            height={75}
+                                            loading="lazy"
+                                            className="aspect-[3/2] w-28 rounded-sm object-cover"
+                                        />
+                                    )}
+                                </div>
+                                <div>
+                                    <p className="mb-2 text-[10px] font-semibold tracking-[0.16em] text-[#aaa49b] uppercase">{update.type}</p>
+                                    <h3 className="max-w-2xl text-2xl font-semibold leading-tight tracking-[-0.045em] sm:text-3xl">
+                                        <a href={`/updates/${update.slug}`} className="transition-colors hover:text-[#ff5634] focus-visible:underline focus-visible:underline-offset-4">
+                                            {update.title}
+                                        </a>
+                                    </h3>
+                                    <p className="mt-3 max-w-xl text-sm leading-6 text-[#c7c1b9]">{update.description}</p>
+                                </div>
+                                <a
+                                    href={`/updates/${update.slug}`}
+                                    aria-label={`Read: ${update.title}`}
+                                    className="text-2xl text-[#d0cac2] transition-colors hover:text-[#ff5634] sm:pt-5"
+                                >
+                                    ↗
+                                </a>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* 04 / Services */}
             <section id="services" className="bg-[#ff5634] px-6 py-20 text-[#111111] sm:px-10 lg:px-16 lg:py-24">
                 <div className="mx-auto grid max-w-[1312px] gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
                     <div>
@@ -194,24 +244,45 @@ export default function Welcome() {
             </section>
 
             {/* 05 / Contact */}
-            <section id="contact" className="relative overflow-hidden px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
+            <section id="contact" className="relative overflow-hidden border-t border-white/10 px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
                 <img
                     src="/images/noise-form/contact.webp"
                     alt=""
                     aria-hidden="true"
                     loading="lazy"
-                    className="pointer-events-none absolute inset-y-0 right-0 h-full w-[75%] object-cover object-center opacity-50 [mask-image:linear-gradient(to_right,transparent_0%,black_70%)]"
+                    className="pointer-events-none absolute inset-y-0 right-0 h-full w-[75%] object-cover object-center opacity-35 [mask-image:linear-gradient(to_right,transparent_0%,black_70%)]"
                 />
-                <div className="relative mx-auto max-w-[1312px]">
-                    <p className="mb-7 text-[11px] font-semibold tracking-[0.13em] uppercase">05 / Contact</p>
-                    <h2 className="max-w-5xl text-[clamp(3.4rem,7vw,8rem)] font-bold leading-[0.92] tracking-[-0.075em] uppercase">
-                        Have a project
-                        <br />
-                        in mind?
-                        <br />
-                        <span className="text-[#ff5634]">Let’s talk.</span>
-                    </h2>
-                    <p className="mt-9 text-sm text-[#aaa49b]">Contact functionality will be added in a later phase.</p>
+                <div className="relative mx-auto grid max-w-[1312px] gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-24">
+                    <div>
+                        <p className="mb-7 text-[11px] font-semibold tracking-[0.13em] uppercase">05 / Contact</p>
+                        <h2 className="max-w-3xl text-[clamp(3.4rem,7vw,8rem)] font-bold leading-[0.92] tracking-[-0.075em] uppercase">
+                            Have a project
+                            <br />
+                            in mind?
+                            <br />
+                            <span className="text-[#ff5634]">Let&apos;s talk.</span>
+                        </h2>
+                        <p className="mt-9 max-w-sm text-sm leading-6 text-[#aaa49b]">Tell us what you&apos;re imagining. We&apos;ll bring the right mix of design, technology, and curiosity.</p>
+                    </div>
+                    <div className="self-end border-t border-white/30 pt-6">
+                        <div className="grid gap-6 sm:grid-cols-2">
+                            <label className="text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
+                                Name
+                                <input type="text" placeholder="Your name" className="mt-3 w-full border-b border-white/25 bg-transparent pb-3 text-sm tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
+                            </label>
+                            <label className="text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
+                                Email
+                                <input type="email" placeholder="you@company.com" className="mt-3 w-full border-b border-white/25 bg-transparent pb-3 text-sm tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
+                            </label>
+                        </div>
+                        <label className="mt-7 block text-[10px] font-semibold tracking-[0.14em] text-[#aaa49b] uppercase">
+                            Project details
+                            <textarea placeholder="A few words about the idea, timeline, or ambition..." rows={4} className="mt-3 w-full resize-none border-b border-white/25 bg-transparent pb-3 text-sm leading-6 tracking-normal text-[#f4f1eb] outline-none placeholder:text-[#77736e] focus:border-[#ff5634]" />
+                        </label>
+                        <button type="button" className="mt-7 inline-flex items-center gap-3 border-b border-[#ff5634] pb-2 text-xs font-semibold tracking-[0.13em] text-[#f4f1eb] uppercase transition-colors hover:text-[#ff5634]">
+                            Send inquiry <span aria-hidden="true">↗</span>
+                        </button>
+                    </div>
                 </div>
             </section>
 
