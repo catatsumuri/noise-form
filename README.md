@@ -1,123 +1,117 @@
-# noise-form
-
-Based on Laravel + React Starter Kit — i18n Edition.
+# NOISE / FORM
 
 English | [日本語](README.ja.md)
 
-A fork of the official [Laravel React starter kit](https://laravel.com/docs/starter-kits) with internationalization (i18n) built in.
+A studio website built with Laravel, Inertia, React, TypeScript, and Tailwind CSS. Design work centers on `welcome.tsx`, with a Laravel backend for articles and inquiries. The same public React pages run in a PHP-free preview for v0.
 
-## Live demo
+## What to edit
 
-https://react-starter-kit-i18n-production-sbhkku.laravel.cloud
+| Area                                                                     | Source                                           |
+| ------------------------------------------------------------------------ | ------------------------------------------------ |
+| Landing page: hero, projects, services, studio, contact, article listing | `resources/js/pages/welcome.tsx`                 |
+| Article detail layout                                                    | `resources/js/pages/updates/show.tsx`            |
+| Shared article prop types                                                | `resources/js/types/update.ts`                   |
+| Fictional preview articles                                               | `mock/updates.ts`                                |
+| Article and inquiry backend                                              | `app/Http/Controllers/`, `app/Models/Update.php` |
 
-The demo database is seeded and then locked read-only (`chmod 444`), so sign-up, login, and other writes will fail with a database-is-readonly error. It resets on every redeploy.
+Projects, services, and other landing-page copy are written directly in `welcome.tsx`. Laravel retrieves articles from the database. Editing preview fixtures does not change database content.
 
-## What's different from the official kit
+## Laravel development
 
-- **Japanese pre-configured** — `ja` locale ships ready to use alongside `en`
-- **Translation pipeline** — `lang/vendor-patches/` controls which locales are generated; add a JSON file, run `lang:update`, done
-- **Translations in React** — `__()` helper available in all React components via Inertia shared props
-- **Session-based locale persistence** — active locale survives page reloads via `LocalizationBySession` middleware
-- **AI agent rules** — `.ai/rules/` (not present upstream) documents this fork's conventions — translating React UI, treating `lang/` as generated output, patching starter-kit translations — for coding agents working in this repo
-
-## Requirements
-
-- PHP 8.3+
-- Node 20+
-- A database supported by Laravel (SQLite works for local dev)
-
-## Adding a locale
-
-Strings that only exist in this fork's React UI (login/2FA/profile screens, etc.) aren't part of the upstream `laravel-lang/starter-kits` package, so they're layered on top of it via `lang/vendor-patches/`:
-
-- `lang/vendor-patches/source/react.json` — the English source strings this fork adds on top of the upstream `react.json`.
-- `lang/vendor-patches/locales/{locale}.json` — translations of those strings for one locale. See `lang/vendor-patches/locales/ja.json` for a complete example.
-
-To add a new locale (e.g. `ko`):
-
-1. If your components use custom strings not already listed in `lang/vendor-patches/source/react.json`, add them there first (English key/value pairs).
-2. Create `lang/vendor-patches/locales/ko.json` and translate every key from `source/react.json`, following the same structure as `lang/vendor-patches/locales/ja.json`. A key can be left out only if upstream already ships a translation for it in that locale (`ja.json` skips `"Warning"` for this reason) — when in doubt, translate it anyway; the patch just overrides the upstream value.
-3. Merge the patches into the vendor package and regenerate the translation files:
-    ```bash
-    composer patch-vendor
-    php artisan lang:update
-    ```
-
-`composer patch-vendor` (`scripts/patch-vendor.php`) merges everything under `lang/vendor-patches/source/` and `lang/vendor-patches/locales/` into the matching files inside `vendor/laravel-lang/starter-kits/`, taking your patch values over the upstream ones. `lang:update` then regenerates `lang/{locale}.json` and `lang/{locale}/*.php` for every locale it finds. `patch-vendor` also runs automatically after `composer install`/`composer update`, and `lang:update` runs automatically after `composer update` — but for a newly added locale, run both explicitly so the new locale is generated immediately.
-
-## Installation
+Use PHP 8.3+, Composer, and Node 22 (used in CI). SQLite is the default local database.
 
 ```bash
-composer create-project catatsumuri/react-starter-kit-i18n my-app
-cd my-app
+git clone https://github.com/catatsumuri/noise-form.git
+cd noise-form
 composer setup
-```
-
-`composer setup` does the following in one shot:
-
-```
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-npm install
-npm run build
-```
-
-## Development
-
-```bash
 composer dev
 ```
 
-Starts four processes concurrently:
+`composer setup` installs PHP/npm dependencies, creates `.env` if missing, generates the application key, runs migrations, and builds Laravel assets. Configure `.env` first if using another database. `composer dev` starts the Laravel development processes, including Vite.
 
-| Process         | Command                    |
-| --------------- | -------------------------- |
-| HTTP server     | `php artisan serve`        |
-| Queue worker    | `php artisan queue:listen` |
-| Log viewer      | `php artisan pail`         |
-| Vite dev server | `npm run dev`              |
+Alternatively, run `php artisan serve` and `npm run dev` in separate terminals. Open the Laravel HTTP server to use the application; Vite serves its frontend assets.
 
-## Architecture
-
-### Backend packages
-
-| Package                          | Role                                                         |
-| -------------------------------- | ------------------------------------------------------------ |
-| `laravel-lang/common`            | Core translation pipeline (`lang:update` command)            |
-| `laravel-lang/routes`            | `LocalizationBySession` middleware                           |
-| `erag/laravel-lang-sync-inertia` | Syncs `lang/{locale}.json` to Inertia shared props as `lang` |
-| `laravel/wayfinder`              | Type-safe route references on the frontend                   |
-
-### Frontend
-
-- React 19 + TypeScript + Vite
-- [shadcn/ui](https://ui.shadcn.com) + [Radix UI](https://www.radix-ui.com) components
-- Tailwind CSS
-- `@erag/lang-sync-inertia` — `lang()` / `__()` hook for translations in React components
-
-### How translations reach the frontend
-
-```
-lang/ja.json
-    ↓  HandleInertiaRequests::share()
-Inertia shared prop: { lang: { "Log in": "ログイン", ... } }
-    ↓  @erag/lang-sync-inertia
-const { __ } = lang()
-    ↓
-__('Log in')  →  "ログイン"
-```
-
-## Code quality
+To add sample articles locally:
 
 ```bash
-composer lint          # PHP (Pint)
-npm run check          # JS/TS lint & format checks
-npm run types:check    # TypeScript
-composer test          # PHPUnit
-composer ci:check      # all of the above
+php artisan db:seed --class=UpdateSeeder
 ```
+
+Existing articles with the same slug are preserved. This seeder creates an author record, not a usable administrator login.
+
+## v0 / PHP-free preview
+
+The public-page preview needs neither PHP nor a database:
+
+```bash
+npm install
+npm run dev:preview
+```
+
+Open the URL printed by Vite. `/` renders the landing page; `/updates/{slug}` renders articles from `mock/updates.ts`.
+
+| Mode       | Development           | Build                   | Configuration                               |
+| ---------- | --------------------- | ----------------------- | ------------------------------------------- |
+| Laravel    | `npm run dev`         | `npm run build`         | `vite.config.ts` → `vite.laravel.config.ts` |
+| v0 preview | `npm run dev:preview` | `npm run build:preview` | `vite.preview.config.ts`                    |
+
+For v0's preview environment, select `npm run dev:preview` as the development command and `npm run build:preview` for preview builds. `npm run dev` starts the Laravel asset server. The external v0 project's actual command settings have not been verified here.
+
+`mock/main.tsx` imports the actual public pages. Preview aliases substitute small adapters for Inertia and supply fixture props. Links use ordinary browser navigation. Inquiry submissions show a preview message and are not saved. Authentication and admin screens are outside the preview's scope.
+
+Keep one UI source: edit the real page components rather than creating a separate mock page or Next.js app. Update preview fixtures/adapters when adding props or Inertia APIs. See [preview notes](mock/README.md) and [workflow rules](.ai/rules/inertia-v0-workflow.md).
+
+## Branch workflow
+
+1. Make design/preview changes on `v0/design` and commit there.
+2. Check the preview and Laravel behavior relevant to the change.
+3. Merge `v0/design` into `main`, preserving Laravel backend changes.
+4. Push both branches when publishing the changes.
+
+`main` is the Laravel integration branch. Both branches retain preview files; the default Vite configuration remains Laravel-oriented. If v0 creates another branch, review and merge its UI changes into `v0/design` first.
+
+## Backend
+
+| Route              | Purpose                                                          |
+| ------------------ | ---------------------------------------------------------------- |
+| `/`                | Landing page with published articles from `HomeController`       |
+| `/updates/{slug}`  | Published article detail                                         |
+| `POST /inquiries`  | Validate and save inquiries; limited to five requests per minute |
+| `/admin/updates`   | Create, view, edit, and delete articles                          |
+| `/admin/inquiries` | View received inquiries                                          |
+
+Articles support drafts (empty `published_at`), scheduled publication, and published content. Public pages only return articles whose publication time has arrived. Bodies are paragraph arrays. Image paths are displayed, but the article editor does not provide image uploads.
+
+Admin routes currently require authentication and a verified email, without a separate administrator-role check. Starter-kit authentication and account settings remain available. Inquiries are stored in the database; the current controller does not send notification emails.
+
+## Checks
+
+```bash
+npm run check          # Formatting and lint
+npm run check:fix      # Apply formatting/lint fixes
+npm run types:check    # TypeScript
+composer lint:check   # PHP formatting
+composer types:check  # PHPStan
+composer test         # PHP formatting, PHPStan, PHPUnit
+composer ci:check     # Frontend checks, then composer test
+```
+
+With a running Laravel Sail environment, prefix commands with `./vendor/bin/sail`, for example `./vendor/bin/sail composer ci:check`.
+
+CI runs `composer setup` and `composer ci:check` for pushes to `main` and pull requests. Run `npm run build:preview` separately when changing public pages or preview adapters. Preview output in `dist/` is ignored by Git, formatting, and lint.
+
+## Inherited i18n support
+
+Based on the Laravel + React Starter Kit — i18n Edition. Authentication and settings retain English/Japanese translation support. Public-page copy is currently written directly in the page components.
+
+Add translation source strings to `lang/vendor-patches/source/react.json` and translations to `lang/vendor-patches/locales/{locale}.json`, then regenerate:
+
+```bash
+composer patch-vendor
+php artisan lang:update
+```
+
+Generated `lang/` output is ignored by Git. See [translation rules](.ai/rules/lang.md) and [starter-kit translation patches](.ai/rules/starter-kits.md).
 
 ## License
 
