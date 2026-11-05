@@ -348,7 +348,10 @@ export default function Welcome({ updates, inquirySent = false }: { updates: Upd
 
             <footer className="border-t border-white/20 px-6 py-8 sm:px-10 lg:px-16">
                 <div className="mx-auto flex max-w-[1312px] flex-wrap items-center justify-between gap-6 text-[11px] tracking-[0.1em] uppercase">
-                    <span className="font-semibold text-[#f4f1eb]">NOISE / FORM®</span>
+                    <a href="#top" aria-label="NOISE / FORM — Back to top" className="group flex items-center gap-4">
+                        <img src="/noise-form-logo.svg" alt="" width={112} height={112} loading="lazy" className="size-24 shrink-0 transition-opacity group-hover:opacity-75 sm:size-28" />
+                        <span className="font-semibold text-[#f4f1eb]">NOISE / FORM®</span>
+                    </a>
                     <span className="text-[#aaa49b]">Berlin, Germany — Fictional studio / Design PoC</span>
                     <a href="#top" className="transition-colors hover:text-[#ff5634]">Back to top ↑</a>
                 </div>
