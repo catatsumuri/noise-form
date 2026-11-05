@@ -34,37 +34,39 @@ export default function Show({ article }: Props) {
             </header>
 
             <article>
-                <header className="mx-auto max-w-[1440px] px-6 pb-16 pt-36 sm:px-10 lg:grid lg:grid-cols-[minmax(0,1fr)_250px] lg:gap-16 lg:px-16 lg:pb-24 lg:pt-44">
-                    <div>
+                <header className="relative isolate mx-auto min-h-[min(760px,78vh)] max-w-[1440px] overflow-hidden px-6 pb-20 pt-36 sm:px-10 lg:grid lg:grid-cols-[minmax(0,1fr)_250px] lg:gap-16 lg:px-16 lg:pb-28 lg:pt-44">
+                    <div className="pointer-events-none absolute inset-y-0 right-0 -z-10 w-full lg:w-[72%]">
+                        <img
+                            src={article.image}
+                            alt=""
+                            aria-hidden="true"
+                            className="h-full w-full object-cover opacity-35 mix-blend-screen [mask-image:linear-gradient(90deg,transparent_0%,black_42%,black_100%)]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#101010] via-[#101010]/55 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#101010] via-transparent to-[#101010]/10" />
+                    </div>
+                    <div className="relative z-10 lg:col-span-2">
                         <a href="/#updates" className="inline-flex items-center gap-3 text-[10px] font-semibold tracking-[0.16em] text-[#aaa49b] uppercase transition-colors hover:text-[#ff5634]">
                             <span aria-hidden="true">←</span> All updates
                         </a>
-                        <p className="mt-16 text-[11px] font-semibold tracking-[0.2em] text-[#ff5634] uppercase">
-                            {article.date} / {article.type}
-                        </p>
-                        <h1 className="mt-6 max-w-5xl text-[clamp(3.4rem,8vw,9rem)] font-bold leading-[0.86] tracking-[-0.085em]">
-                            {article.title}
-                        </h1>
+                        <div className="mt-24 max-w-4xl lg:mt-32">
+                            <p className="text-[11px] font-semibold tracking-[0.2em] text-[#ff5634] uppercase">
+                                {article.date} / {article.type}
+                            </p>
+                            <h1 className="mt-6 text-[clamp(3.4rem,8vw,9rem)] font-bold leading-[0.86] tracking-[-0.085em]">
+                                {article.title}
+                            </h1>
+                        </div>
                     </div>
-                    <div className="mt-10 border-l border-white/15 pl-5 lg:mt-auto lg:pb-2">
+                    <div className="relative z-10 mt-16 max-w-sm border-l border-white/15 pl-5 lg:col-start-2 lg:mt-auto lg:pb-2">
                         <p className="text-[10px] font-semibold tracking-[0.16em] text-[#aaa49b] uppercase">Field note / 001</p>
                         <p className="mt-4 text-base leading-7 text-[#d5d0c7]">{article.description}</p>
                     </div>
+                    <div className="absolute bottom-8 left-6 z-10 flex items-center gap-3 text-[10px] font-semibold tracking-[0.16em] text-white/50 uppercase sm:left-10 lg:left-16">
+                        <span className="h-2 w-2 rounded-full bg-[#ff5634]" aria-hidden="true" />
+                        NOISE / FORM — BERLIN
+                    </div>
                 </header>
-
-                <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16">
-                    <figure className="relative overflow-hidden bg-[#1b1b1b]">
-                        <div className="absolute left-5 top-5 z-10 flex items-center gap-3 text-[10px] font-semibold tracking-[0.16em] text-white/70 uppercase sm:left-8 sm:top-8">
-                            <span className="h-2 w-2 rounded-full bg-[#ff5634]" aria-hidden="true" />
-                            NOISE / FORM — BERLIN
-                        </div>
-                        <img
-                            src={article.image}
-                            alt={article.imageAlt}
-                            className="aspect-[16/9] w-full object-cover opacity-90 transition-transform duration-700 hover:scale-[1.02]"
-                        />
-                    </figure>
-                </div>
 
                 <div className="mx-auto grid max-w-[1440px] gap-12 px-6 py-20 sm:px-10 lg:grid-cols-[250px_minmax(0,760px)] lg:gap-24 lg:px-16 lg:py-32">
                     <aside className="text-[10px] font-semibold tracking-[0.16em] text-[#aaa49b] uppercase">
