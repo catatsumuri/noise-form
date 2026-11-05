@@ -40,6 +40,27 @@ const services = [
     'Experimental R&D',
 ];
 
+const updates = [
+    {
+        date: '05.2026',
+        type: 'Studio note',
+        title: 'Noise / Form opens a new chapter in Berlin.',
+        description: 'A tighter team, wider field of view, and more room for experiments at the edge of design and technology.',
+    },
+    {
+        date: '03.2026',
+        type: 'New work',
+        title: 'Signal Field enters the world.',
+        description: 'Our latest interactive installation turns motion, light, and sound into a shared physical language.',
+    },
+    {
+        date: '11.2025',
+        type: 'Field note',
+        title: 'Researching the feeling of digital matter.',
+        description: 'Notes from our ongoing study of texture, atmosphere, and the spaces between screen and body.',
+    },
+];
+
 export default function Welcome() {
     return (
         <main id="top" className="min-h-screen overflow-x-hidden bg-[#0b0b0b] font-sans text-[#f4f1eb] antialiased">
@@ -51,6 +72,7 @@ export default function Welcome() {
                 </a>
                 <nav aria-label="Main navigation" className="flex items-center gap-4 text-[10px] font-semibold tracking-[0.13em] uppercase sm:gap-8 sm:text-[11px]">
                     <a href="#work" className="transition-colors hover:text-[#ff5634]">Work</a>
+                    <a href="#updates" className="hidden transition-colors hover:text-[#ff5634] sm:inline">Updates</a>
                     <a href="#studio" className="hidden transition-colors hover:text-[#ff5634] sm:inline">Studio</a>
                     <a href="#services" className="hidden transition-colors hover:text-[#ff5634] sm:inline">Services</a>
                     <a href="#contact" className="transition-colors hover:text-[#ff5634]">Contact</a>
@@ -148,7 +170,35 @@ export default function Welcome() {
                 </div>
             </section>
 
-            {/* 03 / Services */}
+            {/* 03 / Latest updates */}
+            <section id="updates" className="border-y border-white/10 bg-[#151515] px-6 py-20 sm:px-10 lg:px-16 lg:py-24">
+                <div className="mx-auto max-w-[1312px]">
+                    <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
+                        <div>
+                            <p className="mb-4 text-[11px] font-semibold tracking-[0.13em] text-[#ff5634] uppercase">03 / Latest updates</p>
+                            <h2 className="max-w-2xl text-[clamp(2.8rem,5vw,5.5rem)] font-bold leading-[0.92] tracking-[-0.07em]">A pulse from the studio.</h2>
+                        </div>
+                        <p className="max-w-[14rem] text-xs leading-5 tracking-[0.08em] text-[#aaa49b] uppercase">Notes, launches, and signals from our orbit.</p>
+                    </div>
+                    <div className="divide-y divide-white/15 border-y border-white/15">
+                        {updates.map((update) => (
+                            <article key={update.date} className="grid gap-5 py-6 sm:grid-cols-[7rem_1fr_auto] sm:items-start sm:gap-8 lg:py-7">
+                                <div className="flex items-center gap-3 text-[11px] font-semibold tracking-[0.13em] text-[#ff5634] uppercase">
+                                    <span>{update.date}</span>
+                                </div>
+                                <div>
+                                    <p className="mb-2 text-[10px] font-semibold tracking-[0.16em] text-[#aaa49b] uppercase">{update.type}</p>
+                                    <h3 className="max-w-2xl text-2xl font-semibold leading-tight tracking-[-0.045em] sm:text-3xl">{update.title}</h3>
+                                    <p className="mt-3 max-w-xl text-sm leading-6 text-[#c7c1b9]">{update.description}</p>
+                                </div>
+                                <span className="text-2xl text-[#d0cac2] sm:pt-5" aria-hidden="true">↗</span>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* 04 / Services */}
             <section id="services" className="bg-[#ff5634] px-6 py-20 text-[#111111] sm:px-10 lg:px-16 lg:py-24">
                 <div className="mx-auto grid max-w-[1312px] gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
                     <div>
