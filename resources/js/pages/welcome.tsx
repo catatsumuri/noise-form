@@ -9,6 +9,8 @@ const projects = [
         category: 'Interactive installation',
         year: '2026',
         background: 'linear-gradient(135deg, #0d0d0d 0%, #3b1b16 40%, #f14826 100%)',
+        image: '/images/noise-form/signal-field.webp',
+        alt: 'Molten orange glass flowing through fractured dark stone',
     },
     {
         number: '02',
@@ -16,6 +18,8 @@ const projects = [
         category: 'Generative visual system',
         year: '2025',
         background: 'radial-gradient(ellipse at 65% 40%, #a5a6dc 0%, #555788 27%, #171727 65%, #090910 100%)',
+        image: '/images/noise-form/lucida.webp',
+        alt: 'Luminous translucent lavender spheres floating in darkness',
     },
     {
         number: '03',
@@ -23,6 +27,8 @@ const projects = [
         category: 'Immersive experience',
         year: '2025',
         background: 'linear-gradient(145deg, #57534e 0%, #262626 55%, #eb4b2a 56%, #a82917 100%)',
+        image: '/images/noise-form/echoes.webp',
+        alt: 'Concrete gallery with orange sculptural installation and dramatic daylight',
     },
 ];
 
@@ -72,11 +78,14 @@ export default function Welcome() {
                         </a>
                     </div>
 
-                    {/* Deliberately simple CSS placeholder artwork for v0 to refine. */}
-                    <div aria-hidden="true" className="relative min-h-[330px] overflow-hidden lg:min-h-[590px]">
-                        <div className="absolute inset-[8%] rotate-[-22deg] rounded-[42%_58%_35%_65%] bg-[radial-gradient(ellipse_at_25%_20%,#ffbe9c_0%,#fa5735_17%,#a92518_38%,#1a0d0a_68%,transparent_73%)] blur-[1px]" />
-                        <div className="absolute left-[20%] top-[15%] h-[60%] w-[69%] rotate-[35deg] rounded-[55%_38%_60%_40%] border-[18px] border-[#f4f0ec]/70 shadow-[inset_12px_0_35px_#f95a37,12px_18px_48px_#ed3f1e]/40 sm:border-[28px]" />
-                        <div className="absolute left-[29%] top-[31%] h-[38%] w-[42%] rotate-[-28deg] rounded-[46%] bg-[#0b0b0b] shadow-[inset_20px_15px_24px_#f45131,0_0_36px_#f45131]/30" />
+                    {/* Generated hero artwork; the same asset is used in Laravel and v0 preview. */}
+                    <div className="relative min-h-[330px] overflow-hidden lg:min-h-[590px]">
+                        <img
+                            src="/images/noise-form/hero.webp"
+                            alt="Abstract sculptural glass loops in orange and silver on a black background"
+                            fetchPriority="high"
+                            className="absolute inset-0 h-full w-full object-contain"
+                        />
                         <p className="absolute bottom-5 right-0 text-[10px] tracking-[0.22em] text-[#a8a39d] uppercase">Abstract study / 001</p>
                     </div>
                 </div>
@@ -112,11 +121,13 @@ export default function Welcome() {
                     <div className="grid gap-8 lg:grid-cols-3">
                         {projects.map((project) => (
                             <article key={project.number}>
-                                <div className="group relative flex aspect-[5/4] items-center justify-center overflow-hidden" style={{ background: project.background }}>
-                                    <span className="text-[clamp(4rem,9vw,9rem)] font-bold tracking-[-0.09em] text-white/20" aria-hidden="true">{project.number}</span>
-                                    <span className="absolute bottom-5 left-5 text-[10px] tracking-[0.18em] text-white/80 uppercase">
-                                        Visual placeholder
-                                    </span>
+                                <div className="group relative aspect-[5/4] overflow-hidden" style={{ background: project.background }}>
+                                    <img
+                                        src={project.image}
+                                        alt={project.alt}
+                                        loading="lazy"
+                                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
+                                    />
                                 </div>
                                 <div className="mt-5 flex items-start justify-between gap-3">
                                     <div>
@@ -165,21 +176,26 @@ export default function Welcome() {
                             developers, and artists exploring what comes next in digital expression.
                         </p>
                     </div>
-                    <div className="relative flex aspect-[4/3] items-end overflow-hidden bg-[#292b2c] p-7">
-                        <div aria-hidden="true" className="absolute left-[15%] top-0 h-full w-px bg-white/15" />
-                        <div aria-hidden="true" className="absolute left-[45%] top-0 h-full w-px bg-white/15" />
-                        <div aria-hidden="true" className="absolute bottom-[25%] left-0 h-px w-full bg-white/15" />
-                        <div aria-hidden="true" className="absolute right-[-10%] top-[-30%] h-[110%] w-[65%] rotate-[25deg] bg-[linear-gradient(90deg,transparent,#a3a3a3)] opacity-40" />
-                        <span className="relative z-10 text-[10px] tracking-[0.18em] text-white/80 uppercase">
-                            Studio photography placeholder
-                        </span>
+                    <div className="relative aspect-[4/3] overflow-hidden bg-[#292b2c]">
+                        <img
+                            src="/images/noise-form/studio.webp"
+                            alt="Creative studio workspace with industrial windows, desks and warm sunlight"
+                            loading="lazy"
+                            className="h-full w-full object-cover"
+                        />
                     </div>
                 </div>
             </section>
 
             {/* 05 / Contact */}
             <section id="contact" className="relative overflow-hidden px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
-                <div className="pointer-events-none absolute bottom-[-20%] right-[-10%] h-[80%] w-[65%] rounded-full bg-[radial-gradient(ellipse,#75757566,transparent_65%)] blur-3xl" aria-hidden="true" />
+                <img
+                    src="/images/noise-form/contact.webp"
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    className="pointer-events-none absolute inset-y-0 right-0 h-full w-[75%] object-cover object-center opacity-50 [mask-image:linear-gradient(to_right,transparent_0%,black_70%)]"
+                />
                 <div className="relative mx-auto max-w-[1312px]">
                     <p className="mb-7 text-[11px] font-semibold tracking-[0.13em] uppercase">05 / Contact</p>
                     <h2 className="max-w-5xl text-[clamp(3.4rem,7vw,8rem)] font-bold leading-[0.92] tracking-[-0.075em] uppercase">
