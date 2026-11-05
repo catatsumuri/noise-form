@@ -3,9 +3,9 @@
 v0 and Laravel render **the same TSX pages** from `resources/js/pages/`.
 The preview only replaces the data provider and navigation mechanism.
 
-| URL | Shared page | Source of props |
-| --- | --- | --- |
-| `/` | `resources/js/pages/welcome.tsx` | `mock/updates.ts` in v0; HomeController in Laravel |
+| URL               | Shared page                           | Source of props                                      |
+| ----------------- | ------------------------------------- | ---------------------------------------------------- |
+| `/`               | `resources/js/pages/welcome.tsx`      | `mock/updates.ts` in v0; HomeController in Laravel   |
 | `/updates/{slug}` | `resources/js/pages/updates/show.tsx` | `mock/updates.ts` in v0; UpdateController in Laravel |
 
 `mock/main.tsx` injects fixtures and matches the URL for the PHP-free preview.

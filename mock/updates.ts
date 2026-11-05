@@ -7,7 +7,8 @@ export const previewArticles: Record<string, UpdateArticle> = {
         date: '05.2026',
         type: 'Studio note',
         title: 'Noise / Form opens a new chapter in Berlin.',
-        description: 'A tighter team, wider field of view, and more room for experiments at the edge of design and technology.',
+        description:
+            'A tighter team, wider field of view, and more room for experiments at the edge of design and technology.',
         image: '/images/noise-form/studio.webp',
         imageAlt: 'An airy creative studio workspace in afternoon sunlight',
         paragraphs: [
@@ -21,9 +22,11 @@ export const previewArticles: Record<string, UpdateArticle> = {
         date: '03.2026',
         type: 'New work',
         title: 'Signal Field enters the world.',
-        description: 'Our latest interactive installation turns motion, light, and sound into a shared physical language.',
+        description:
+            'Our latest interactive installation turns motion, light, and sound into a shared physical language.',
         image: '/images/noise-form/signal-field.webp',
-        imageAlt: 'An abstract black mineral surface illuminated by glowing orange light',
+        imageAlt:
+            'An abstract black mineral surface illuminated by glowing orange light',
         paragraphs: [
             'Signal Field begins with a simple question: what if an environment could listen as closely as it speaks? The work responds to movement with changing patterns of light and sound.',
             'Instead of a conventional interface, visitors encounter a material world that shifts around their presence. Each interaction changes the composition in subtle, unpredictable ways.',
@@ -35,7 +38,8 @@ export const previewArticles: Record<string, UpdateArticle> = {
         date: '11.2025',
         type: 'Field note',
         title: 'Researching the feeling of digital matter.',
-        description: 'Notes from our ongoing study of texture, atmosphere, and the spaces between screen and body.',
+        description:
+            'Notes from our ongoing study of texture, atmosphere, and the spaces between screen and body.',
         image: '/images/noise-form/lucida.webp',
         imageAlt: 'Translucent lavender spheres suspended in deep blue light',
         paragraphs: [

@@ -1,14 +1,14 @@
 ---
 paths:
-  - 'resources/js/pages/welcome.tsx'
-  - 'resources/js/pages/updates/**'
-  - 'mock/**'
-  - 'vite.preview.config.ts'
-  - 'vite.config.ts'
-  - 'routes/web.php'
-  - 'app/Http/Controllers/HomeController.php'
-  - 'app/Http/Controllers/UpdateController.php'
-  - 'app/Http/Controllers/InquiryController.php'
+    - 'resources/js/pages/welcome.tsx'
+    - 'resources/js/pages/updates/**'
+    - 'mock/**'
+    - 'vite.preview.config.ts'
+    - 'vite.config.ts'
+    - 'routes/web.php'
+    - 'app/Http/Controllers/HomeController.php'
+    - 'app/Http/Controllers/UpdateController.php'
+    - 'app/Http/Controllers/InquiryController.php'
 ---
 
 # NOISE / FORM — v0 + Laravel/Inertia workflow
