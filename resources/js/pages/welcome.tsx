@@ -47,46 +47,52 @@ export default function Welcome() {
 
             {/* 00 / Header and hero */}
             <section className="relative isolate overflow-hidden border-b border-white/10">
-                <header className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-wrap items-center justify-between gap-6 px-6 py-7 sm:px-10 lg:px-16">
+                <header className="relative z-20 mx-auto flex w-full max-w-[1440px] items-center justify-between gap-5 px-6 py-6 sm:px-10 lg:px-16 lg:py-7">
                     <a href="#top" className="text-lg font-bold tracking-[-0.07em]">
                         NOISE / FORM<span className="align-top text-[10px]">®</span>
                     </a>
-                    <nav aria-label="Main navigation" className="flex flex-wrap items-center gap-6 text-[11px] font-semibold tracking-[0.13em] uppercase sm:gap-9">
+                    <nav aria-label="Main navigation" className="flex items-center gap-4 text-[10px] font-semibold tracking-[0.13em] uppercase sm:gap-8 sm:text-[11px]">
                         <a href="#work" className="transition-colors hover:text-[#ff5634]">Work</a>
-                        <a href="#studio" className="transition-colors hover:text-[#ff5634]">Studio</a>
-                        <a href="#services" className="transition-colors hover:text-[#ff5634]">Services</a>
+                        <a href="#studio" className="hidden transition-colors hover:text-[#ff5634] sm:inline">Studio</a>
+                        <a href="#services" className="hidden transition-colors hover:text-[#ff5634] sm:inline">Services</a>
                         <a href="#contact" className="transition-colors hover:text-[#ff5634]">Contact</a>
                     </nav>
                 </header>
 
-                <div className="relative mx-auto grid min-h-[690px] max-w-[1440px] items-center gap-8 px-6 pb-24 pt-16 sm:px-10 lg:grid-cols-[1.12fr_0.88fr] lg:px-16 lg:py-24">
-                    <div className="relative z-10">
-                        <p className="mb-8 max-w-[19rem] text-[10px] font-medium leading-5 tracking-[0.2em] text-[#c3bdb6] uppercase">
-                            Independent creative technology studio
-                            <span className="block">Berlin — Est. 2023</span>
-                        </p>
-                        <span className="mb-7 block h-[3px] w-9 bg-[#ff5634]" aria-hidden="true" />
-                        <h1 className="max-w-[900px] text-[clamp(3.1rem,7.1vw,7.6rem)] font-bold leading-[0.89] tracking-[-0.075em] uppercase">
-                            Digital
-                            <br />
-                            experiences
-                            <br />
-                            with a <span className="text-[#ff5634]">pulse.</span>
-                        </h1>
-                        <a href="#work" className="mt-12 inline-flex items-center gap-3 border-b border-white/60 pb-2 text-xs font-semibold tracking-[0.13em] uppercase transition-colors hover:border-[#ff5634] hover:text-[#ff5634]">
-                            Explore our work <span aria-hidden="true">↗</span>
-                        </a>
-                    </div>
-
-                    {/* Generated hero artwork; the same asset is used in Laravel and v0 preview. */}
-                    <div className="relative min-h-[330px] overflow-hidden lg:min-h-[590px]">
+                <div className="relative mx-auto min-h-[calc(100svh-78px)] max-w-[1440px] px-6 pb-14 pt-16 sm:px-10 sm:pb-20 lg:min-h-[690px] lg:px-16 lg:pb-24 lg:pt-20">
+                    <div className="pointer-events-none absolute inset-0 z-0 lg:left-[34%]">
                         <img
                             src="/images/noise-form/hero.webp"
                             alt="Abstract sculptural glass loops in orange and silver on a black background"
                             fetchPriority="high"
-                            className="absolute inset-0 h-full w-full object-contain"
+                            className="h-full w-full object-cover object-[58%_50%] opacity-90 lg:object-[62%_50%]"
                         />
-                        <p className="absolute bottom-5 right-0 text-[10px] tracking-[0.22em] text-[#a8a39d] uppercase">Abstract study / 001</p>
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#0b0b0b] via-[#0b0b0b]/45 to-transparent lg:via-[#0b0b0b]/15" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b0b] via-transparent to-[#0b0b0b]/10" />
+                    </div>
+
+                    <div className="relative z-10 flex min-h-[calc(100svh-180px)] flex-col justify-between lg:min-h-[590px]">
+                        <div>
+                            <p className="mb-7 max-w-[19rem] text-[10px] font-medium leading-5 tracking-[0.2em] text-[#c3bdb6] uppercase">
+                                Independent creative technology studio
+                                <span className="block">Berlin — Est. 2023</span>
+                            </p>
+                            <span className="mb-6 block h-[3px] w-9 bg-[#ff5634]" aria-hidden="true" />
+                            <h1 className="max-w-[900px] text-[clamp(3.6rem,8.8vw,9.4rem)] font-bold leading-[0.82] tracking-[-0.085em] uppercase">
+                                Digital
+                                <br />
+                                experiences
+                                <br />
+                                with a <span className="text-[#ff5634]">pulse.</span>
+                            </h1>
+                        </div>
+
+                        <div className="flex flex-wrap items-end justify-between gap-8 pt-14 lg:pt-10">
+                            <a href="#work" className="inline-flex items-center gap-3 border-b border-white/60 pb-2 text-xs font-semibold tracking-[0.13em] uppercase transition-colors hover:border-[#ff5634] hover:text-[#ff5634]">
+                                Explore our work <span aria-hidden="true">↗</span>
+                            </a>
+                            <p className="text-[10px] tracking-[0.22em] text-[#a8a39d] uppercase">Abstract study / 001</p>
+                        </div>
                     </div>
                 </div>
             </section>
